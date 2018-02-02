@@ -2,17 +2,20 @@ library (dplyr)
 library (tidyr)
 library(ggplot2)
 library(ggthemes)
+library(rworldmap)
 
 groups <- c("ARB","CSS","CEB", "EAP","EAR","ECA","ECS","EMU","EUU","FCS","HIC","HPC","IBD","IBT","IDA","IDB","IDX","LAC","LCN","LDC","LIC","LMC","LMY","LTE","MEA","MIC","MNA","OED",
   "OSS","PRE","PSS","PST","SSA","SST","SSF","TEA","TEC","TLA","TMN","TSA","TSS","UMC","WLD")
 
 names(forestdata)[2] <- "code"
 names(area)[2] <- "code"
+names(forestprc)[2] <- "code"
 
 forestdata$code <- as.factor(forestdata$code)
 
 nogroups <- forestdata[!(forestdata$code %in% groups),]
 nogrouparea <- area[!(area$code %in% groups),]
+forestprc <- forestprc[!(forestprc$code %in% groups),]
 
 hist(nogroups$`2013`/100000,xlim=c(0,20),breaks=40)
 
@@ -36,6 +39,13 @@ colMeans(cover[,c(33,34)],na.rm=TRUE)
 hist(diff1990/1000,xlim=c(-10,20))
 hist(diff2013/1000)
 
+
+prc <- forestprc
+prc$diff <- -(prc$`2015` - prc$`1990`)
+names(prc)[1] <- "Country"
+
+
+
 #plotting
 
 usonly <- cover[cover$code=="USA",]
@@ -50,3 +60,7 @@ ggplot(usplot,aes(x=year,y=(forest/1000),group=1)) + theme_hc() + scale_colour_h
   scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2015),label=c(1990,1995,2000,2005,2010,2015)) +
   geom_line() + geom_point() + xlab("Year") + ylab("Forest cover (in thousands of sq. km)")
 
+
+forestmap <- joinCountryData2Map(prc,joinCode="NAME",nameJoinColumn = 'Country')
+mapDevice('x11')
+mapCountryData(forestmap,nameColumnToPlot = 'diff',catMethod = 'fixedWidth',numCats=6,colourPalette = "diverging")
