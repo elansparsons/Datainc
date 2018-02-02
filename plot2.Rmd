@@ -3,7 +3,7 @@ title: "Deforestation rate by country, 1990-2013"
 output: html_notebook
 ---
 
-Much of the world has had low rates of forest growth, not loss, in the period from 1990 to 2013. Much of the forest loss on the planet is focused in Latin America, Africa, and southeast Asia. However, to restore the full ecological functions of our former forest extent (as in, even before 1990), it seems we need to be more aggressive in reforestation efforts than in the past few decades.
+Much of the world has had low rates of forest growth, not loss, in the period from 1990 to 2013, represented here in greens and blues. Much of the forest loss on the planet, in yellows and reds, is focused in Latin America, Africa, and southeast Asia. However, to restore the full ecological functions of our former forest extent (as in, even before 1990), it seems we need to be more aggressive in reforestation efforts than in the past few decades.
 ```{r}
 mapCountryData(forestmap,nameColumnToPlot = 'diff',catMethod = 'fixedWidth',numCats=6,colourPalette = "diverging")
 ```
