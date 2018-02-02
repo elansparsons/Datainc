@@ -1,0 +1,14 @@
+---
+title: "US Forest Cover over time"
+output: html_notebook
+---
+
+Considering the US is in a constant state of development, I assumed incorrectly that our forest cover would have decreased steadily over time.
+However, it has increased by roughly 80 000 sq km (~30 000 sq mi) in the last 25 years. This amount, admittedly, is not much to a country of the US's size, but it is heartening nonetheless.
+
+```{r}
+ggplot(usplot,aes(x=year,y=(forest/1000),group=1)) + theme_hc() + scale_colour_hc() + 
+  scale_x_continuous(breaks=c(1990,1995,2000,2005,2010,2015),label=c(1990,1995,2000,2005,2010,2015)) +
+  geom_line() + geom_point() + xlab("Year") + ylab("Forest cover (in thousands of sq. km)")
+```
+
